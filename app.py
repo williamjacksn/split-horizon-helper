@@ -88,7 +88,7 @@ def cleanup():
 
 
 def main():
-    logging.basicConfig(format=settings.log_format, level=settings.log_level, stream=sys.stdout)
+    logging.basicConfig(format=settings.log_format, level=logging.DEBUG, stream=sys.stdout)
     app.logger.debug(f'split-horizon-helper {settings.version}')
     if not settings.log_level == 'DEBUG':
         app.logger.debug(f'Changing log level to {settings.log_level}')
