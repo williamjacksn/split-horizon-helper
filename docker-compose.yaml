@@ -1,0 +1,5 @@
+version: '3.7'
+
+services:
+  split-horizon-helper:
+    image: docker.pkg.github.com/williamjacksn/split-horizon-helper/split-horizon-helper
