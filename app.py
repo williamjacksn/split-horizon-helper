@@ -47,6 +47,11 @@ def build_change_batch(action, name, value):
     }
 
 
+@app.route('/')
+def index():
+    return 'OK'
+
+
 @app.route('/present', methods=['POST'])
 def present():
     data = flask.request.json
