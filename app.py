@@ -29,6 +29,24 @@ settings = Settings()
 app = flask.Flask(__name__)
 
 
+def build_change_batch(action, name, value):
+    return {
+        'Changes': [
+            {
+                'Action': action,
+                'ResourceRecordSet': {
+                    'Name': name,
+                    'Type': 'TXT',
+                    'TTL': 30,
+                    'ResourceRecords': [
+                        {'Value': flask.json.dumps(value)}
+                    ]
+                }
+            }
+        ]
+    }
+
+
 @app.route('/present', methods=['POST'])
 def present():
     data = flask.request.json
@@ -39,21 +57,7 @@ def present():
     for hosted_zone_id in settings.hosted_zone_ids:
         client.change_resource_record_sets(
             HostedZoneId=hosted_zone_id,
-            ChangeBatch={
-                'Changes': [
-                    {
-                        'Action': 'UPSERT',
-                        'ResourceRecordSet': {
-                            'Name': fqdn,
-                            'Type': 'TXT',
-                            'TTL': 30,
-                            'ResourceRecords': [
-                                {'Value': value}
-                            ]
-                        }
-                    }
-                ]
-            }
+            ChangeBatch=build_change_batch('UPSERT', fqdn, value)
         )
     return 'OK'
 
@@ -68,21 +72,7 @@ def cleanup():
     for hosted_zone_id in settings.hosted_zone_ids:
         client.change_resource_record_sets(
             HostedZoneId=hosted_zone_id,
-            ChangeBatch={
-                'Changes': [
-                    {
-                        'Action': 'DELETE',
-                        'ResourceRecordSet': {
-                            'Name': fqdn,
-                            'Type': 'TXT',
-                            'TTL': 30,
-                            'ResourceRecords': [
-                                {'Value': value}
-                            ]
-                        }
-                    }
-                ]
-            }
+            ChangeBatch=build_change_batch('DELETE', fqdn, value)
         )
     return 'OK'
 
