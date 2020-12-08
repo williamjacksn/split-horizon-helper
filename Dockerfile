@@ -1,4 +1,4 @@
-FROM python:3.8.6-alpine3.11
+FROM python:3.9.1-alpine3.12
 
 COPY requirements.txt /split-horizon-helper/requirements.txt
 
