@@ -2,4 +2,4 @@
 
 Flask==1.1.2
 boto3==1.17.27
-waitress==1.4.4
+waitress==2.0.0
