@@ -1,5 +1,5 @@
 --extra-index-url https://alpine-wheels.github.io/index
 
 Flask==2.0.1
-boto3==1.17.93
+boto3==1.17.97
 waitress==2.0.0
